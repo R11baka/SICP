@@ -1,4 +1,4 @@
 SICP
 ====
 
-SICP
+SICP exercises
