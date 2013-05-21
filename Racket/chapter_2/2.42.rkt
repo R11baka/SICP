@@ -41,4 +41,4 @@
                   (enumerate-interval 1 board-size)))
            (queen-cols (- k 1))))))
    (queen-cols board-size))
-(queens 4)
+(display (queens 4))
