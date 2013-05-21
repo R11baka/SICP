@@ -38,16 +38,16 @@
   (and (pair? x) (eq? (car x) '+)))
 (define (addend s) (cadr s))
 (define (augend s) 
-  (if (pair? (cddr s)) 
+  (if (not (pair? (cdddr s))) 
       (caddr s)
-      (list '+ (cddr s))))
+      (cons '+ (cddr s))))
 ; multiply
 (define (product? x)
   (and (pair? x) (eq? (car x) '*)))
 (define (multiplier p) (cadr p))
-(define (multiplicand p)  (if (pair? (cddr p)) 
+(define (multiplicand p) (if (not (pair? (cdddr p)))
       (caddr p)
-      (list '* (cddr p))))
+      (cons '* (cddr p))))
 ;exponent
 (define (exponentiation? x)
   (and (pair? x) (eq? (car x) '** )))
@@ -58,5 +58,5 @@
   )
 (define (base s)(cadr s))
 (define (exponent s) (caddr s))
-(display (deriv '(* x (+ 2 x)) 'x))
+(display (deriv '(* x y (+ x 3)) 'x))
 ;2.57
