@@ -1,3 +1,4 @@
+(load "common.rkt")
 (define (deriv exp var)
   (cond ((number? exp) 0)
         ((variable? exp)
@@ -19,11 +20,6 @@
         (else
          (error "unknown expression type -- DERIV" exp))))
 
-(define (variable? x) (symbol? x))
-(define (same-variable? v1 v2)
-  (and (variable? v1) (variable? v2) (eq? v1 v2)))
-
-
 (define (make-sum a1 a2)
   (cond ((=number? a1 0) a2)
         ((=number? a2 0) a1)
@@ -36,8 +32,7 @@
         ((=number? m2 1) m1)
         ((and (number? m1) (number? m2)) (* m1 m2))
         (else (list '* m1 m2))))
-(define (=number? exp num)
-(and (number? exp) (= exp num)))
+
 ; sum
 (define (sum? x)
   (and (pair? x) (eq? (car x) '+)))
