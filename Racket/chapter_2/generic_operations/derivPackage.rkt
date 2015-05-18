@@ -1,5 +1,4 @@
 #lang planet neil/sicp
-(define global-array '())
 
 (define (make-entry k v) (list k v))
 (define (key entry) (car entry))
@@ -19,10 +18,17 @@
           (else (get-helper k (cdr array)))))
   (get-helper (list op type) global-array))
 
+(define global-array '())
 (define (variable? x) (symbol? x))
 (define (same-variable? v1 v2)
 (and (variable? v1) (variable? v2) (eq? v1 v2)))
-(define (make-sum a1 a2) (list '+ a1 a2))
+  (define (=number? exp num)
+(and (number? exp) (= exp num)))
+(define (make-sum a1 a2)
+  (cond ((=number? a1 0) a2)
+        ((=number? a2 0) a1)
+        ((and (number? a1) (number? a2)) (+ a1 a2))
+        (else (list '+ a1 a2))))
 (define (make-product m1 m2) (list '* m1 m2))
 (define (sum? x)
 (and (pair? x) (eq? (car x) '+)))
@@ -55,15 +61,16 @@ var))))
      (deriv1 (car operands) var)
      (deriv1 (cadr operands) var)
     ))
-    (define (sum-deriv1 operands var)
-      (cond 
-        ((null? operands) 0)
-        (else 
-      (make-sum
-       (deriv1 (car operands) var)
-       (sum-deriv1 (cdr operands) var)
-      ))
-    ))
+   (define (sum-deriv1 operands var)
+    (if (= (length operands) 2)
+        (make-sum
+         (deriv1 (car operands) var)
+         (deriv1 (cadr operands) var)         
+         )        
+        (make-sum
+         (deriv1 (car operands) var)
+         (sum-deriv1 (cdr operands) var))
+         ))
     
     (put 'deriv '+ sum-deriv1)    
     'done)
