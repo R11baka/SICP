@@ -365,5 +365,5 @@ term-list
 ((get 'make 'polynomial) var terms))
 
 (define px (make-polynomial 'x '((1 2))))
-(define px1 (make-polynomial 'x '((1 2))))
+(define px1 (make-polynomial 'x '((10 2))))
 (add px px1)

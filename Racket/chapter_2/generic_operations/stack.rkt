@@ -1,0 +1,17 @@
+#lang planet neil/sicp
+(define (make-stack) (cons 'stack nil))
+(define (stack? stack) 
+  (and 
+   (pair? stack) 
+   (eq? 'stack (car stack))
+   ))
+(define (empty? stack)
+  (if (not (stack? stack))
+      (error "not stack")
+      (eq? (cdr stack) nil)
+      ))
+(define (insert! stack elt)
+  (if (not (stack? stack))
+      (error "not stack")
+      (set-cdr! stack (cons elt (cdr stack)))   
+   ))
